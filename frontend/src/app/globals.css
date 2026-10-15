@@ -1,0 +1,280 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ───────────── Brand tokens (light) — taken from the Kanhaiya Vedics label ───────────── */
+:root {
+  --background: #fbf8f1;
+  --surface: #ffffff;
+  --surface-2: #f3ede0;
+  --foreground: #1f2a1b;
+  --heading: #1f3d1c;
+  --muted: #5f6857;
+  --border: #e6dccb;
+
+  --primary: #1f3d1c;
+  --primary-hover: #2a5126;
+  --primary-foreground: #fbf8f1;
+
+  --leaf: #4f7a28;
+  --leaf-soft: #e7eed9;
+  --gold: #b98e35;
+  --gold-soft: #f5ebcf;
+  --wood: #8a6a4a;
+  --milk: #fffdf7;
+
+  --ring: #4f7a28;
+  --shadow: 31 61 28;
+  color-scheme: light;
+}
+
+/* ───────────── Dark theme ───────────── */
+.dark {
+  --background: #0d130c;
+  --surface: #141c12;
+  --surface-2: #1b2618;
+  --foreground: #ece7da;
+  --heading: #f4efe2;
+  --muted: #a3ab96;
+  --border: #29362a;
+
+  --primary: #a9cf72;
+  --primary-hover: #bcdc8b;
+  --primary-foreground: #0d130c;
+
+  --leaf: #93c05a;
+  --leaf-soft: #1d2a16;
+  --gold: #e2bf6c;
+  --gold-soft: #2b2513;
+  --wood: #b08a62;
+  --milk: #1a2317;
+
+  --ring: #a9cf72;
+  --shadow: 0 0 0;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-heading: var(--heading);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-leaf: var(--leaf);
+  --color-leaf-soft: var(--leaf-soft);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-wood: var(--wood);
+  --color-milk: var(--milk);
+  --color-ring: var(--ring);
+
+  --font-display: var(--font-lora), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-spin-slow: spin 24s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(2deg); }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: auto;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--heading);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--leaf);
+    color: var(--milk);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  input, textarea, select {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-x { padding-inline: 1.5rem; }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--leaf);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+  }
+
+  .field {
+    width: 100%;
+    border-radius: 0.9rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 0.8rem 1rem;
+    color: var(--foreground);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field::placeholder { color: var(--muted); opacity: 0.7; }
+  .field:focus {
+    outline: none;
+    border-color: var(--leaf);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--leaf) 18%, transparent);
+  }
+  .label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--foreground);
+  }
+
+  /* Brush-stroke banner, like "From Farm to Homes" on the label */
+  .brush {
+    position: relative;
+    isolation: isolate;
+    padding: 0.35rem 1.1rem;
+    color: #fbf8f1;
+  }
+  .brush::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: #4a6b23;
+    border-radius: 0.4rem 1.2rem 0.5rem 1.4rem / 1rem 0.5rem 1.1rem 0.4rem;
+    transform: skewX(-6deg);
+  }
+
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(100deg, #8a6a25, #d9b968 35%, #f4dfa0 50%, #c9a24c 70%, #8a6a25);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Lenis smooth scrolling */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.theme-switching *, .theme-switching *::before, .theme-switching *::after {
+  transition: none !important;
+}
+
+/* Circular theme reveal (see ThemeToggle) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+body { overflow-x: clip; }
+
+/* Intro curtain is skipped (pre-paint) for visitors who've already seen it this session */
+.kv-intro-seen .kv-intro { display: none; }
+
+@keyframes rise {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  15% { opacity: 0.9; }
+  100% { transform: translateY(-70vh) scale(1.1); opacity: 0; }
+}
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 1; }
+  80% { transform: translateY(12px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+@keyframes flicker {
+  0%, 100% { transform: scaleY(1) scaleX(1); }
+  25% { transform: scaleY(1.12) scaleX(0.94); }
+  50% { transform: scaleY(0.92) scaleX(1.05); }
+  75% { transform: scaleY(1.08) scaleX(0.97); }
+}
+@keyframes churn {
+  0%, 100% { transform: rotate(-14deg); }
+  50% { transform: rotate(14deg); }
+}
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+@theme inline {
+  --animate-rise: rise 9s linear infinite;
+  --animate-scroll-dot: scroll-dot 1.8s ease-in-out infinite;
+  --animate-flicker: flicker 1.2s ease-in-out infinite;
+  --animate-churn: churn 1.6s ease-in-out infinite;
+  --animate-shimmer: shimmer 6s linear infinite;
+}

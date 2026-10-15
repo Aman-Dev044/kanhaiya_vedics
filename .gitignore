@@ -1,0 +1,19 @@
+# Dependencies & builds
+node_modules/
+.next/
+.next-*/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Secrets — never commit (see .env.example in each app)
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
